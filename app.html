@@ -21,8 +21,8 @@
     				var filter = this.getContext().getTimeboxScope().getQueryFilter();
     				filter = filter.and({
        					property: 'TestCaseStatus',
-       					operator: '<=',
-       					value: 'ALL_RUN_ALL_PASSING'  
+       					operator: '!=',
+       					value: 'NONE'  
    				 	});
     
     				Ext.create('Rally.data.WsapiDataStore', {
@@ -30,7 +30,7 @@
            				fetch: ['FormattedID','Name','TestCases', 'TestCaseStatus', 'PortfolioItem'],
            				pageSize: 100,
            				autoLoad: true,
-           				//filters: [filter], 
+           				filters: [filter], 
            				listeners: {
                				load: this._onDataLoaded,
                				scope: this
@@ -115,7 +115,7 @@
                     renderer: function(value) {
                         var html = [];
                         Ext.Array.each(value, function(testcase){
-                            html.push('<a href="' + Rally.nav.Manager.getDetailUrl(testcase) + '">' + testcase.FormattedID + '</a>' + ' ' + testcase.LastVerdict);
+                            html.push('<a href="' + Rally.nav.Manager.getDetailUrl(testcase) + '" target="_top">' + testcase.FormattedID + '</a>' + ' ' + testcase.LastVerdict);
                         });
                         return html.join('</br>');
                     }
